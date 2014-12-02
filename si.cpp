@@ -20,6 +20,7 @@ void makeEraseString(char buf[], int len);
 
 void printWelcomeScreen(int maxy, int maxx);
 void printInstructions(int maxy, int maxx);
+void printTank();
 void printAliens();
 void printBarriers();
 
@@ -48,6 +49,9 @@ int main(int argc, char *argv[]){
        erase();
 
      //Start Loop  
+
+	  //print tank
+	  printTank();
 
      //print aliens 
      printAliens();
@@ -89,8 +93,9 @@ void initialize(){
  (void) cbreak(); //take input chars one at a time
  (void) noecho(); //dont echo input
  init_pair(1, COLOR_BLUE, COLOR_BLACK);
- init_pair(2, COLOR_RED, COLOR_BLACK); 
-
+ init_pair(2, COLOR_RED, COLOR_RED); 
+ init_pair(3, COLOR_GREEN , COLOR_GREEN);
+ init_pair(4, COLOR_BLUE, COLOR_BLUE);
  //initialize game global variables
  
 
@@ -123,7 +128,7 @@ void makeEraseString(char buf[], int len){
 void printBarriers(){
 
  //set barrier color 
- attron(COLOR_PAIR(1));
+ attron(COLOR_PAIR(4));
 
  //print the barriers
  mvaddch(19,5, '#');
@@ -253,6 +258,15 @@ void printWelcomeScreen(int maxy, int maxx){
   return;
 }
 
+
+void printTank(){
+ attron(COLOR_PAIR(3));
+ mvaddch(22,2, 'x');
+ mvaddch(22,3, 'x');
+ mvaddch(22,4, 'x');
+ refresh(); //refresh screen
+
+}
 
 
 void printAliens(){
@@ -389,6 +403,3 @@ refresh(); //refresh screen
 	  printWelcomeScreen(maxy, maxx); 
 scanf("%c", &in);
 */
-
-
-
