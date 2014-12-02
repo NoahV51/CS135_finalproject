@@ -2,8 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "formatted_console_io_v20.h"
-//#include <ncurses.h>
+#include <ncurses.h>
 
 //menu constants 
 const int menu_min_x = 10;
@@ -14,17 +13,16 @@ const int menu_max_y = 20;
 
 
 //prototypes
-void startScreen();
 
 
 void initialize(){
  //terminal graphics
- void initscr(); //initializes the curses library
+ (void) initscr(); //initializes the curses library
  start_color();
  keypad(stdscr, TRUE); //enable keyboard mapping
- void nonl(); //tesll curses not to do NL-> CR/NL on output
- void cbreak(); //take input chars one at a time
- void noecho(); //dont echo input
+ (void) nonl(); //tesll curses not to do NL-> CR/NL on output
+ (void) cbreak(); //take input chars one at a time
+ (void) noecho(); //dont echo input
  init_pair(1, COLOR_BLUE, COLOR_BLACK);
  init_pair(2, COLOR_RED, COLOR_BLACK); 
 
@@ -58,77 +56,83 @@ void printWelcomeScreen(int maxy, int maxx){
   mvprintw(maxy/2, maxx/2 - 10, "Welcome to NOT PONG"); // print welcome, approximately middle of screen
   refresh(); //refresh screen
   attroff(COLOR_PAIR(1)); // go back to default colors
-  sleep(10); // sleep for a second by calling the linux/unix sleep library call
+  sleep(1); // sleep for a second by calling the linux/unix sleep library call
+  char in;
+  scanf("%c", &in);	
   return;
 }
+
 
 void finish(int sig)
 {
     endwin();
-    /* do your non-curses wrapup here */
+    //do your non-curses wrapup here 
     // print a nice message
     
-      printf ("\nThe Game Has Ended\n");
+    printf ("\nThe Game Has Ended\n");
  
     return;//    exit(0);
 }
 
 
+
 //mainfunction
-	int main(int argc, char *argv[]){
+int main(int argc, char *argv[]){
 
-		//Initialize Variables
-	   int maxx, maxy; //maxx and maxy size of terminal
+    //Initialize Variables
+    int maxx, maxy; //maxx and maxy size of terminal
 
-		//Start Curses
- 	   initialize();
-      getmaxyx(stdscr, maxy, maxx);              // get current screen size 
-      printWelcomeScreen(maxy, maxx);            // Print welcome screen
-      erase();    
-		
-
-	
-		//Display Tittle Screen
-	  
-	 
-		//Begin Menu Loop
+    //Start Curses
+    initialize();
+    getmaxyx(stdscr, maxy, maxx);      // get current screen size 
+    printWelcomeScreen(maxy, maxx);    // Print welcome screen
+    erase();   
 
 
-			//print menu screen 
 
-			//if '1' , show score board 
+attron(COLOR_PAIR(2));
+mvaddch(5,5, 'x');
+mvaddch(4,5, 'x');
+mvaddch(3,5, 'x');
+refresh(); //refresh screen
+  attroff(COLOR_PAIR(1)); // go back to default colors
+  char in;
+  scanf("%c", &in);
+	erase();   
+     //Display Tittle Screen
+	  printWelcomeScreen(maxy, maxx); 
+scanf("%c", &in);
+     //Begin Menu Loop
 
-			//else if '2' , play the game
+
+       //print menu screen 
+
+	 //if '1' , show score board 
+
+	 //else if '2' , play the game
 
       
-		//End Curses
+      //End Curses
       finish(0);
-		//End Program 
- 	   return 0;
+     
+      //End Program 
+      return 0;
 
 }
 
-
-
-
-
+//draw something 
 /*
-void startScreen(){
-
-setColor(COLOR_GREEN, COLOR_BLACK, SET_BRIGHT);
-clearScreen(SCRN_MIN_X, SCRN_MIN_Y, SCRN_MAX_X, SCRN_MAX_Y);
-
-setColor(COLOR_GREEN, COLOR_BLACK, SET_BRIGHT);
-printStringAt (menu_min_x +17, menu_min_y +13, " Not quite pong...","LEFT"); 
-
-
-setColor(COLOR_GREEN, COLOR_BLACK, SET_BRIGHT);
-printStringAt (menu_min_x +17, menu_min_y +15, " Press any key to continue...","LEFT"); 
-
-waitForInput(FIXED_WAIT);
-
-}
+attron(COLOR_PAIR(1));
+mvaddch(5,5, 'x');
+mvaddch(4,5, 'x');
+mvaddch(3,5, 'x');
+refresh(); //refresh screen
+  attroff(COLOR_PAIR(1)); // go back to default colors
+  sleep(1);
 */
+
+
+
 
 
 
